@@ -279,6 +279,7 @@ print("\\nКомпилятор готов к работе!")
   // ==========================================================================
   let isHumanTypingActive = false;
   let isCapsLockActive = true;
+  let activeTypingSessionId = 0;
 
   function updateCapsLockState(e) {
     if (e && typeof e.getModifierState === 'function') {
@@ -293,6 +294,7 @@ print("\\nКомпилятор готов к работе!")
     }
     if (e.key === 'Escape') {
       isHumanTypingActive = false; // Emergency cancel human typing
+      activeTypingSessionId++;
     }
   }, true);
 
@@ -302,7 +304,6 @@ print("\\nКомпилятор готов к работе!")
   window.addEventListener('click', updateCapsLockState, true);
 
   function checkSnippetTrigger() {
-    if (isHumanTypingActive) return;
     const text = textarea.value;
     const pos = textarea.selectionStart;
     const textBefore = text.substring(0, pos);
@@ -312,6 +313,9 @@ print("\\nКомпилятор готов к работе!")
       const isSlowHuman = match[1] === '?';
       const triggerKey = match[2];
       if (snippets[triggerKey]) {
+        // Cancel any active background human typing loop
+        isHumanTypingActive = false;
+        activeTypingSessionId++;
         expandSnippet(triggerKey, match.index, pos, isSlowHuman);
       }
     }
@@ -324,6 +328,7 @@ print("\\nКомпилятор готов к работе!")
     if (isSlowHuman) {
       typeSnippetHumanLike(snippet.text, matchIndex, endPos);
     } else {
+      isHumanTypingActive = false;
       const fullText = textarea.value;
       const snippetText = snippet.text;
 
@@ -349,7 +354,8 @@ print("\\nКомпилятор готов к работе!")
   }
 
   async function typeSnippetHumanLike(snippetText, matchIndex, endPos) {
-    if (isHumanTypingActive) return;
+    activeTypingSessionId++;
+    const currentSessionId = activeTypingSessionId;
     isHumanTypingActive = true;
     isCapsLockActive = true; // Initialize to active upon triggering command
 
@@ -370,12 +376,14 @@ print("\\nКомпилятор готов к работе!")
     let isPrevSpace = false;
 
     for (let i = 0; i < chars.length; i++) {
+      if (activeTypingSessionId !== currentSessionId || !isHumanTypingActive) break;
+
       // CapsLock Control: Pause typing if CapsLock is turned off
       if (!isCapsLockActive) {
-        while (!isCapsLockActive && isHumanTypingActive) {
+        while (!isCapsLockActive && isHumanTypingActive && activeTypingSessionId === currentSessionId) {
           await sleep(40);
         }
-        if (!isHumanTypingActive) break;
+        if (!isHumanTypingActive || activeTypingSessionId !== currentSessionId) break;
 
         // Resumed after CapsLock turned back ON!
         // Sync index i and currentPos to match whatever text remains in the editor
@@ -399,7 +407,7 @@ print("\\nКомпилятор готов к работе!")
         textarea.value = '';
         updateEditorDisplay();
         i = -1; // Reset loop to start from beginning (i = 0)
-        await sleep(500); // Brief pause before restarting
+        await sleep(400); // Brief pause before restarting
         continue;
       }
 
@@ -464,8 +472,10 @@ print("\\nКомпилятор готов к работе!")
       await sleep(delay);
     }
 
-    saveHistoryState();
-    isHumanTypingActive = false;
+    if (activeTypingSessionId === currentSessionId) {
+      saveHistoryState();
+      isHumanTypingActive = false;
+    }
   }
 
   // Block manual keyboard typing while human script auto-typing is active & CapsLock is ON
@@ -476,7 +486,9 @@ print("\\nКомпилятор готов к работе!")
   });
 
   textarea.addEventListener('input', () => {
-    if (isHumanTypingActive) return;
+    if (textarea.value.trim() === '') {
+      isHumanTypingActive = false; // Clear state if editor is completely empty
+    }
     updateEditorDisplay();
     checkSnippetTrigger();
     saveHistoryState();
