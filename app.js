@@ -36,100 +36,100 @@ print("\\nКомпилятор готов к работе!")
 
   const DEFAULT_SNIPPETS = {
   "!1": {
-    "label": "Snippet 1",
-    "text": "import random\nn = random.randint(100, 999)\ns = sum(map(int, str(n)))\nprint(n, s % 5 == 0)\ninput()"
+    "label": "Bilet 1",
+    "text": "import random\n\nchislo = random.randint(100, 999)\na = chislo // 100\nb = (chislo % 100) // 10\nc = chislo % 10\nitog = a + b + c\nif itog % 5 == 0:\n    print('Является')\nelse:\n    print('Не Является')\nprint(chislo)"
   },
   "!2": {
-    "label": "Snippet 2",
-    "text": "n = int(input(\"Введите зарплату: \"))\nif n <= 6000:\n    h = 0.1\nelif n <= 10000:\n    h = 0.15\nelif n <= 15000:\n    h = 0.17\nelse:\n    h = 0.2\n    z = n * h\n    print(f\"Налог: {z}\")\n    print(f\"Итого: {n - z}\")\n    input()"
+    "label": "Bilet 2",
+    "text": "polsovatel = float(input('Введите сумму зарплаты: '))\nif polsovatel > 0 and polsovatel <= 6000:\n    nalog = 10 * polsovatel / 100\nelif polsovatel > 6000 and polsovatel <= 10000:\n    nalog = 15 * polsovatel / 100\nelif polsovatel > 10000 and polsovatel <= 15000:\n    nalog = 17 * polsovatel / 100\nelse:\n    nalog = 20 * polsovatel / 100\n\nitog = polsovatel - nalog\nprint(f'Налог: {nalog} Зарплата с вычетом налога: {itog}')"
   },
   "!3": {
-    "label": "Snippet 3",
-    "text": "n = int(input(\"Введите сумму: \"))\nif n <= 5000:\n    h = 0.05\nelif n <= 15000:\n    h = 0.12\nelif n <= 25000:\n    h = 0.2\nelse:\n    h = 0.3\n    z = n * h\n    print(f\"Скидка: {z}\")\n    print(f\"Итого: {n - z}\")\n    input()"
+    "label": "Bilet 3",
+    "text": "polsovatel = float(input('Введите сумму покупки: '))\nif polsovatel > 0 and polsovatel < 5000:\n    skidka = 5 * polsovatel / 100\nelif polsovatel >= 5000 and polsovatel < 15000:\n    skidka = 12 * polsovatel / 100\nelif polsovatel >= 15000 and polsovatel < 25000:\n    skidka = 20 * polsovatel / 100\nelse:\n    skidka = 30 * polsovatel / 100\n\nitog = polsovatel - skidka\nprint(f'Скидка: {skidka} Продажа с вычетом скидки: {itog}')"
   },
   "!4": {
-    "label": "Snippet 4",
-    "text": "import random\nn = int(input(\"Введите размер массива: \"))\na = [random.randint(1, 25) for _ in range(n)]\neven = [x for x in a if x % 2 == 0]\ns = sum(even)\np = 1\nfor x in even:\n    p *= x\n    print(a, s, p)\n    input()"
+    "label": "Bilet 4",
+    "text": "import random\n\nn = int(input('Введите размер массива (более 4): '))\nwhile n <= 4:\n    n = int(input('Размер должен быть больше 4. Введите размер массива: '))\n\narr = [random.randint(0, 25) for _ in range(n)]\nprint(arr)\n\ns = 0\np = 1\nfor x in arr:\n    if x % 2 == 0 and x != 0:\n        s += x\n        p *= x\n\nprint('Сумма четных чисел:', s)\nprint('Произведение четных чисел:', p)"
   },
   "!5": {
-    "label": "Snippet 5",
-    "text": "n = int(input(\"Введите время(час): \"))\nif n < 0 or n > 23:\n    print(\"Ошибка\")\nelif 4 <= n < 10:\n    print(\"Доброе утро\")\nelif 10 <= n < 16:\n    print(\"Добрый день\")\nelif 16 <= n < 21:\n    print(\"Добрый вечер\")\nelse:\n    print(\"Доброй ночи\")\n    input()"
+    "label": "Bilet 5",
+    "text": "polsovatel = int(input('Введите время: '))\nif 4 <= polsovatel < 10:\n    print('Доброе утро')\nelif 10 <= polsovatel < 16:\n    print('Добрый день')\nelif 16 <= polsovatel < 21:\n    print('Добрый вечер')\nelse:\n    print('Доброй ночи')"
   },
   "!6": {
-    "label": "Snippet 6",
-    "text": "import random\nn = random.randint(100, 999)\ns = sum(map(int, str(n)))\nprint(n, 10 <= s <= 99)\ninput()"
+    "label": "Bilet 6",
+    "text": "import random\n\nchislo = random.randint(100, 999)\na = chislo // 100\nb = (chislo % 100) // 10\nc = chislo % 10\nitog = a + b + c\nprint(itog)\nif itog >= 10:\n    print('Является')\nelse:\n    print('Не Является')"
   },
   "!7": {
-    "label": "Snippet 7",
-    "text": "a = int(input(\"Математика: \"))\nb = int(input(\"Русскиий язык: \"))\nc = int(input(\"Информатика: \"))\nd = int(input(\"Физика: \"))\nres1 = a + b + c + d\navg = res1 / 4\nif min(a, b, c, d) >= 3:\n    if avg >= 4.5:\n        print(5000)\n    elif avg >= 4:\n        print(2500)\n    else:\n        print(0)\nelse:\n    print(0)\ninput()"
+    "label": "Bilet 7",
+    "text": "mat = float(input('Введите оценку по математике: '))\nrs = float(input('Введите оценку по русскому языку: '))\ninf = float(input('Введите оценку по информатике: '))\nfis = float(input('Введите оценку по физике: '))\n\nitog = (mat + rs + inf + fis) / 4\n\nif itog >= 4.5:\n    print(f'Средний балл: {itog} Стипендия 5000')\nelif 4.0 <= itog < 4.5:\n    print(f'Средний балл: {itog} Стипендия 2500')\nelse:\n    print(f'Средний балл: {itog} Стипендия 0')"
   },
   "!8": {
-    "label": "Snippet 8",
-    "text": "import random\nn = int(input(\"Введите размер массива: \"))\na = [random.randint(-100, 100) for _ in range(n)]\npos = [x for x in a if x > 0]\nprint(a, len(pos), sum(pos)/len(pos))\ninput()"
+    "label": "Bilet 8",
+    "text": "import random\n\nn = int(input('Введите размер массива (более 4): '))\nwhile n <= 4:\n    n = int(input('Размер должен быть больше 4. Введите размер массива: '))\n\narr = [random.randint(-100, 100) for _ in range(n)]\n\npos_sum = 0\ncount = 0\nfor x in arr:\n    if x > 0:\n        pos_sum += x\n        count += 1\n\nsr = pos_sum / count if count > 0 else 0\nprint('Массив:', arr)\nprint('Число положительных чисел:', count)\nprint('Среднее арифметическое число:', sr)"
   },
   "!9": {
-    "label": "Snippet 9",
-    "text": "import random\nn = int(input(\"Введите размер массива: \"))\na = [random.randint(-50, 50) for _ in range(n)]\notvet = [x for x in a if x < 0]\nprint(a, max(otvet) if otvet else \"net\")\ninput()"
+    "label": "Bilet 9",
+    "text": "import random\n\nn = int(input('Введите размер массива (более 4): '))\nwhile n <= 4:\n    n = int(input('Размер должен быть больше 4. Введите размер массива: '))\n\narr = [random.randint(-50, 50) for _ in range(n)]\n\nmax_neg = None\nfor x in arr:\n    if x < 0:\n        if max_neg is None or x > max_neg:\n            max_neg = x\n\nprint('Массив:', arr)\nprint('Максимальный отрицательный элемент:', max_neg)"
   },
   "!!10": {
-    "label": "Snippet 10",
-    "text": "n = int(input())\na = [list(map(int, input().split())) for _ in range(n)]\nprint(sum(a[i][i] for i in range(n)))\ninput()"
+    "label": "Bilet 10",
+    "text": "num = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\ndiag_sum = 0\nfor i in range(len(num)):\n    diag_sum += num[i][i]\n    print(num[i][i])\nprint('Сумма главной диагонали:', diag_sum)"
   },
   "!!11": {
-    "label": "Snippet 11",
-    "text": "# Bilet 11\nimport random\nn = int(input(\"Введите размер массива: \"))\na = [random.randint(0, 50) for _ in range(n)]\ni_max = a.index(max(a))\ni_min = a.index(min(a))\na[i_max], a[i_min] = a[i_min], a[i_max]\nprint(a)\ninput()"
+    "label": "Bilet 11",
+    "text": "import random\n\nn = int(input('Введите размер массива (более 4): '))\nwhile n <= 4:\n    n = int(input('Размер должен быть больше 4. Введите размер массива: '))\n\narr = [random.randint(0, 50) for _ in range(n)]\n\nmin_val = arr[0]\nmax_val = arr[0]\nmin_idx = 0\nmax_idx = 0\n\nprint('Исходный массив:', arr)\n\nfor i in range(n):\n    if arr[i] > max_val:\n        max_val = arr[i]\n        max_idx = i\n    if arr[i] < min_val:\n        min_val = arr[i]\n        min_idx = i\n\narr[min_idx], arr[max_idx] = arr[max_idx], arr[min_idx]\nprint('После изменения:', arr)"
   },
   "!!12": {
-    "label": "Snippet 12",
-    "text": "a = float(input(\"Введите первое число: \"))\nc = input(\"Введите знак: \")\nb = float(input(\"Введите второе число: \"))\nif c == \"+\":\n    print(a + b)\nelif c == \"-\":\n    print(a - b)\nelif c == \"*\":\n    print(a * b)\nelif c == \"/\":\n    print(a / b)\nelse:\n    print(\"Вы ввели неправильный знак!\")\n    input()"
+    "label": "Bilet 12",
+    "text": "def plus(chislo1, chislo2):\n    return float(chislo1) + float(chislo2)\n\ndef minus(chislo1, chislo2):\n    return float(chislo1) - float(chislo2)\n\ndef ymn(chislo1, chislo2):\n    return float(chislo1) * float(chislo2)\n\ndef delen(chislo1, chislo2):\n    return float(chislo1) / float(chislo2)\n\na = float(input('Введите первое число: '))\nop = input('Введите операцию (+, -, *, /): ')\nb = float(input('Введите второе число: '))\n\nif op == '+':\n    print('Ответ:', plus(a, b))\nelif op == '-':\n    print('Ответ:', minus(a, b))\nelif op == '*':\n    print('Ответ:', ymn(a, b))\nelif op == '/':\n    print('Ответ:', delen(a, b))"
   },
   "!!13": {
-    "label": "Snippet 13",
-    "text": "import random\nn = int(input(\"Введите размер массива: \"))\na = [random.randint(1, 100) for _ in range(n)]\np = len([x for x in a if x % 7 == 0 and x % 5 != 0 and x % 3 != 0])\nprint(a, p)\ninput()"
+    "label": "Bilet 13",
+    "text": "import random\n\nn = int(input('Введите размер массива (более 4): '))\nwhile n <= 4:\n    n = int(input('Размер должен быть больше 4. Введите размер массива: '))\n\narr = [random.randint(-1, 98) for _ in range(n)]\n\ncount = 0\nfor x in arr:\n    if x % 7 == 0 and x % 5 != 0 and x % 3 != 0:\n        count += 1\n\nprint('Массив:', arr)\nprint('Количество элементов по условию:', count)"
   },
   "!!14": {
-    "label": "Snippet 14",
-    "text": "a = float(input(\"Введите первое число: \"))\nc = input(\"Введите знак (**, //, %): \")\nb = float(input(\"Введите второе число: \"))\nif c == \"**\":\n    print(a ** b)\nelif c == \"//\":\n    print(a // b)\nelif c == \"%\":\n    print(a % b)\nelse:\n    print(\"Вы ввели неправильный знак!\")\n    input()"
+    "label": "Bilet 14",
+    "text": "def st(chislo1, chislo2):\n    return float(chislo1) ** float(chislo2)\n\ndef del_op(chislo1, chislo2):\n    return float(chislo1) // float(chislo2)\n\ndef dlos(chislo1, chislo2):\n    return float(chislo1) % float(chislo2)\n\na = float(input('Введите первое число: '))\nop = input('Введите операцию (**, //, %): ')\nb = float(input('Введите второе число: '))\n\nif op == '**':\n    print('Ответ:', st(a, b))\nelif op == '//':\n    print('Ответ:', del_op(a, b))\nelif op == '%':\n    print('Ответ:', dlos(a, b))"
   },
   "!!15": {
-    "label": "Snippet 15",
-    "text": "n = int(input())\na = [list(map(int, input().split())) for _ in range(n)]\nfor i in range(n):\n    a[i][i] = 7\n    print(*a, sep=\"\\n\")\n    input()"
+    "label": "Bilet 15",
+    "text": "num = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nprint('Массив:', num)\nfor i in range(len(num)):\n    num[i][i] = 7\nprint('Измененный список:', num)"
   },
   "!!16": {
-    "label": "Snippet 16",
-    "text": "s = \"программирование\"\nprint(s[2])\nprint(s[-2])\nprint(s[:5])\nprint(s[:-2])\nprint(s[::2])\nprint(s[1::2])\nprint(s[::-1])\nprint(s[::-2])\nprint(len(s))\ninput()"
+    "label": "Bilet 16",
+    "text": "s = 'Программирование'\nprint(s)\n\nprint('a) Третий символ- ' + s[2])\nprint('b) Предпоследний символ- ' + s[-2])\nprint('c) Первые пять символов- ' + s[:5])\nprint('d) Строка без последних двух символов- ' + s[:-2])\n\nfor i in range(0, len(s), 2):\n    print('e) Символы с чётными индексами:', s[i])\n\nfor i in range(1, len(s), 2):\n    print('f) Символы с нечётными индексами:', s[i])\n\nprint('g) Строка в обратном порядке:', s[::-1])\n\nfor i in range(len(s) - 1, -1, -2):\n    print('h) Через один в обратном порядке:', s[i])\n\nprint('i) Длина строки- ' + str(len(s)))"
   },
   "!!17": {
-    "label": "Snippet 17",
-    "text": "import random\nn = int(input(\"Введите размер массива: \"))\na = [random.randint(0, 25) for _ in range(n)]\neven = [x for x in a if x % 2 == 0]\nprint(a, len(even), sum(even)/len(even))\ninput()"
+    "label": "Bilet 17",
+    "text": "mat = float(input('Введите оценку по математике: '))\nist = float(input('Введите оценку по истории: '))\nrs = float(input('Введите оценку по русскому языку: '))\ninf = float(input('Введите оценку по информатике: '))\nfis = float(input('Введите оценку по физике: '))\n\nitog = (mat + ist + rs + inf + fis) / 5\n\nif itog >= 4.5:\n    print(f'Средний балл: {itog} Стипендия 3000')\nelif 4.0 <= itog < 4.5:\n    print(f'Средний балл: {itog} Стипендия 1500')\nelse:\n    print(f'Средний балл: {itog} Стипендия 0')"
   },
   "!!18": {
-    "label": "Snippet 18",
-    "text": "a = int(input(\"Математика: \"))\nb = int(input(\"История\"))\nc = int(input(\"Русский язык\"))\nd = int(input(\"Информатика\"))\nf = int(input(\"Физика\"))\nres1 = a + b + c + d + f\navg = res1 / 5\nif min(a, b, c, d, f) >= 3:\n    if avg >= 4.5:\n        print(3000)\n    elif avg >= 4:\n        print(1500)\n    else:\n        print(0)\nelse:\n    print(0)\ninput()"
+    "label": "Bilet 18",
+    "text": "import random\n\nn = int(input('Введите размер массива (более 4): '))\nwhile n <= 4:\n    n = int(input('Размер должен быть больше 4. Введите размер массива: '))\n\narr = [random.randint(0, 25) for _ in range(n)]\n\neven_sum = 0\ncount = 0\nfor x in arr:\n    if x % 2 == 0:\n        even_sum += x\n        count += 1\n\nsr = even_sum / count if count > 0 else 0\nprint('Массив:', arr)\nprint('Число четных чисел:', count)\nprint('Среднее арифметическое число:', sr)"
   },
   "!!19": {
-    "label": "Snippet 19",
-    "text": "n = int(input(\"Введите сумму продажи: \"))\nif n <= 8000:\n    p = 0.7\nelif n <= 16000:\n    p = 0.14\nelif n <= 26000:\n    p = 0.2\nelse:\n    p = 0.27\n    z = n * p\n    print(f\"Скидка: {z}\")\n    print(f\"Сумма с вычетом скидки: {n - z}\")\n    input()"
+    "label": "Bilet 19",
+    "text": "polsovatel = float(input('Введите сумму покупки: '))\nif polsovatel > 0 and polsovatel < 8000:\n    skidka = 7 * polsovatel / 100\nelif polsovatel >= 8000 and polsovatel < 16000:\n    skidka = 14 * polsovatel / 100\nelif polsovatel >= 16000 and polsovatel < 26000:\n    skidka = 20 * polsovatel / 100\nelse:\n    skidka = 27 * polsovatel / 100\n\nitog = polsovatel - skidka\nprint(f'Скидка: {skidka} Продажа с вычетом скидки: {itog}')"
   },
   "!!20": {
-    "label": "Snippet 20",
-    "text": "a = int(input())\nb = int(input())\nwhile a >= b:\n    a -= b\n    print(a)"
+    "label": "Bilet 20",
+    "text": "polsovatel = float(input('Введите сумму зарплаты: '))\nif polsovatel > 0 and polsovatel <= 8000:\n    nalog = 12 * polsovatel / 100\nelif polsovatel > 8000 and polsovatel <= 15000:\n    nalog = 15 * polsovatel / 100\nelif polsovatel > 15000 and polsovatel <= 20000:\n    nalog = 18 * polsovatel / 100\nelse:\n    nalog = 20 * polsovatel / 100\n\nitog = polsovatel - nalog\nprint(f'Зарплата: {polsovatel} Налог: {nalog} Зарплата с вычетом налога: {itog}')"
   },
   "!!21": {
-    "label": "Snippet 21",
-    "text": "n = int(input(\"Введите размер зарплаты: \"))\nif n <= 8000:\n    p = 0.12\nelif n <= 15000:\n    p = 0.15\nelif n <= 20000:\n    p = 0.18\nelse:\n    p = 0.2\n    z = n * p\n    print(f\"Зарплата: {n}\")\n    print(f\"Налог: {z}\")\n    print(f\"Зарплата с вычетом налога: {n - z}\")\n    input()"
+    "label": "Bilet 21",
+    "text": "a = float(input('Введите число отрезка A: '))\nb = float(input('Введите число отрезка B: '))\n\nwhile a <= b:\n    a = float(input('Отрезок A должен быть больше B: '))\n    b = float(input('Отрезок B должен быть меньше A: '))\n\nwhile a >= b:\n    a -= b\n\nprint('Длина незанятой части отрезка A:', a)"
   },
   "!!22": {
-    "label": "Snippet 22",
-    "text": "import random\nn = int(input())\na = [random.randint(25, 85) for _ in range(n)]\nodd = [x for x in a if x % 2 != 0]\ns = sum(odd)\np = 1\nfor x in odd:\n    p *= x\n    print(a, s, p)\n    input()"
+    "label": "Bilet 22",
+    "text": "import random\n\nn = int(input('Введите размер массива (более 4): '))\nwhile n <= 4:\n    n = int(input('Размер должен быть больше 4. Введите размер массива: '))\n\narr = [random.randint(25, 85) for _ in range(n)]\nprint(arr)\n\ns = 0\np = 1\nfor x in arr:\n    if x % 2 != 0:\n        s += x\n        p *= x\n\nprint('Сумма нечетных чисел:', s)\nprint('Произведение нечетных чисел:', p)"
   },
   "!!23": {
-    "label": "Snippet 23",
-    "text": "n = int(input())\nif n < 3:\n    print(\"Ошибка\")\nelif n == 3:\n    print(\"треугольник\")\nelif n == 4:\n    print(\"четырехугольник\")\nelif n == 5:\n    print(\"пятиугольник\")\nelif n == 6:\n    print(\"шестиугольник\")\nelif n == 7:\n    print(\"семиугольник\")\nelif n == 8:\n    print(\"восьмиугольник\")\nelse:\n    print(\"многоугольник\")\n    input()"
+    "label": "Bilet 23",
+    "text": "n = int(input('Введите количество углов: '))\nwhile n <= 2:\n    n = int(input('Ошибка. Углов должно быть больше: '))\n\nif n == 3:\n    print('Треугольник')\nelif n == 4:\n    print('Четырехугольник')\nelif n == 5:\n    print('Пятиугольник')\nelif n == 6:\n    print('Шестиугольник')\nelif n == 7:\n    print('Семиугольник')\nelif n == 8:\n    print('Восьмиугольник')\nelse:\n    print('Многоугольник')"
   },
   "!!24": {
-    "label": "Snippet 24",
-    "text": "m = int(input())\nif m in [12, 1, 2]:\n    print(\"зима\")\nelif m in [3, 4, 5]:\n    print(\"весна\")\nelif m in [6, 7, 8]:\n    print(\"лето\")\nelif m in [9, 10, 11]:\n    print(\"осень\")\nelse:\n    print(\"Ошибка\")\n    input()"
+    "label": "Bilet 24",
+    "text": "n = int(input('Введите номер месяца (1-12): '))\nif 3 <= n <= 5:\n    print('Весна')\nelif 6 <= n <= 8:\n    print('Лето')\nelif 9 <= n <= 11:\n    print('Осень')\nelif n == 12 or n == 1 or n == 2:\n    print('Зима')\nelse:\n    print('Ошибка')"
   }
 };
 
