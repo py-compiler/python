@@ -164,13 +164,10 @@ print("\\nКомпилятор готов к работе!")
   const snippetsListView = document.getElementById('snippets-list-view');
 
   function loadSnippets() {
-    const saved = localStorage.getItem('online_py_snippets');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        return Object.assign({}, DEFAULT_SNIPPETS, parsed);
-      } catch (e) {}
-    }
+    try {
+      localStorage.removeItem('online_py_snippets');
+      localStorage.removeItem('online_python_snippets');
+    } catch (e) {}
     return Object.assign({}, DEFAULT_SNIPPETS);
   }
 
