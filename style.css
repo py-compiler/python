@@ -1,0 +1,731 @@
+/* ==========================================================================
+   Online Python UI Replica & Crisp Visible Code Editor
+   ========================================================================== */
+
+:root {
+  --bg-nav: #161821;
+  --bg-toolbar: #20232d;
+  --bg-editor: #1b1d28;
+  --bg-gutter: #20232d;
+  --bg-terminal: #0d0e15;
+  --bg-card: #252834;
+  --border-color: #2e3240;
+
+  --text-main: #d8dee9;
+  --text-white: #ffffff;
+  --text-muted: #6c768a;
+
+  --font-code: 'Fira Code', Consolas, 'Courier New', monospace;
+  --font-ui: 'Source Sans Pro', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-nav);
+  color: var(--text-main);
+  font-family: var(--font-ui);
+  font-size: 14px;
+}
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ==========================================================================
+   1. Top Header Bar
+   ========================================================================== */
+.top-nav {
+  background-color: var(--bg-nav);
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-white);
+  letter-spacing: 0.5px;
+}
+
+.top-nav-right {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-pill-btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 16px;
+  border: none;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s, background 0.15s;
+}
+
+.nav-pill-btn.blue {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.nav-pill-btn.blue:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.nav-pill-btn.green {
+  background-color: #28a745;
+  color: #ffffff;
+}
+
+.nav-pill-btn.green:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   2. Toolbar Row
+   ========================================================================== */
+.toolbar {
+  background-color: var(--bg-toolbar);
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tool-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tool-btn {
+  background-color: #2c303c;
+  color: #b0b7c3;
+  border: 1px solid #383d4c;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+
+.tool-btn:hover {
+  background-color: #3b4150;
+  color: #ffffff;
+  border-color: #4a5264;
+}
+
+.snippet-cmd-btn {
+  background-color: rgba(243, 156, 18, 0.15);
+  color: #f39c12;
+  border-color: rgba(243, 156, 18, 0.3);
+  font-weight: 600;
+}
+
+.snippet-cmd-btn:hover {
+  background-color: rgba(243, 156, 18, 0.3);
+  color: #ffffff;
+}
+
+.run-main-btn {
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  height: 32px;
+  padding: 0 18px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  transition: background 0.15s, transform 0.15s;
+}
+
+.run-main-btn:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+.icon-only {
+  width: 32px;
+  padding: 0;
+}
+
+.args-input {
+  background-color: #161821;
+  border: 1px solid #383d4c;
+  color: #ffffff;
+  height: 30px;
+  border-radius: 4px;
+  padding: 0 10px;
+  font-size: 12px;
+  width: 180px;
+}
+
+.args-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* ==========================================================================
+   3. Main Workspace Split
+   ========================================================================== */
+.workspace {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 88px);
+  overflow: hidden;
+}
+
+.editor-pane {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-right: 1px solid var(--border-color);
+  background-color: var(--bg-editor);
+}
+
+.terminal-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--bg-terminal);
+  transition: flex 0.2s ease-in-out;
+}
+
+.terminal-pane.expanded {
+  flex: 3.5 !important;
+}
+
+/* Tabs Bar */
+.tabs-header {
+  background-color: #161821;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 4px;
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+.editor-tabs {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  gap: 2px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #20232d;
+  color: var(--text-muted);
+  padding: 0 14px;
+  height: 36px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border-right: 1px solid var(--border-color);
+  border-top: 2px solid transparent;
+  user-select: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tab:hover {
+  background-color: #262936;
+  color: var(--text-main);
+}
+
+.tab.active {
+  background-color: var(--bg-editor);
+  color: var(--text-white);
+  border-top-color: #007bff;
+  font-weight: 600;
+}
+
+.tab-label {
+  white-space: nowrap;
+}
+
+.tab-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 14px;
+  color: #6c768a;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tab-close:hover {
+  background-color: rgba(255, 95, 86, 0.2);
+  color: #ff5f56;
+}
+
+.add-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.add-tab-btn:hover {
+  background-color: #262936;
+  color: var(--text-white);
+}
+
+/* ==========================================================================
+   4. High-Contrast Visible Code Editor Box
+   ========================================================================== */
+.code-editor-box {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-editor);
+}
+
+.gutter {
+  background-color: var(--bg-gutter);
+  width: 48px;
+  padding-top: 10px;
+  font-family: var(--font-code);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  text-align: right;
+  user-select: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gutter-line {
+  padding-right: 10px;
+  height: 1.5em;
+}
+
+.gutter-line.active {
+  color: var(--text-white);
+  font-weight: bold;
+}
+
+.editor-input {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  background-color: var(--bg-editor);
+  color: #ffffff !important; /* CRITICAL: ALWAYS BRIGHT WHITE VISIBLE TEXT */
+  caret-color: #528bff;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 10px 14px;
+  font-family: var(--font-code);
+  font-size: 14px;
+  line-height: 1.5;
+  tab-size: 4;
+  white-space: pre;
+  word-wrap: normal;
+  overflow: auto;
+}
+
+.editor-status-bar {
+  height: 24px;
+  background-color: var(--bg-toolbar);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   5. Terminal Panel
+   ========================================================================== */
+.output-header-tabs {
+  display: flex;
+  background-color: var(--bg-toolbar);
+  height: 32px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.out-tab {
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.out-tab.active {
+  color: var(--text-white);
+  border-bottom-color: #007bff;
+  background-color: var(--bg-terminal);
+}
+
+.badge-num {
+  background-color: #383d4c;
+  color: #ffffff;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  margin-left: 6px;
+}
+
+.terminal-toolbar {
+  background-color: #161821;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.term-tools {
+  display: flex;
+  gap: 4px;
+}
+
+.term-tool-btn {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  height: 24px;
+  width: 26px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.term-tool-btn:hover {
+  background-color: #252834;
+  color: var(--text-white);
+}
+
+.badge-online {
+  background-color: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-online .dot {
+  width: 6px;
+  height: 6px;
+  background-color: #28a745;
+  border-radius: 50%;
+}
+
+.terminal-screen {
+  flex: 1;
+  padding: 14px;
+  font-family: var(--font-code);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #d8dee9;
+  overflow-y: auto;
+}
+
+.term-line {
+  margin-bottom: 4px;
+  white-space: pre-wrap;
+}
+
+.term-line.welcome {
+  color: #61afef;
+  font-weight: 600;
+}
+
+.term-line.hint {
+  color: var(--text-muted);
+}
+
+.term-output {
+  color: #98c379;
+}
+
+.term-error {
+  color: #e06c75;
+}
+
+.term-info {
+  color: #61afef;
+  font-style: italic;
+}
+
+.prompt-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.prompt-sym {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background-color: #ffffff;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ==========================================================================
+   6. Snippets Manager Modal
+   ========================================================================== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  width: 600px;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+  color: var(--text-main);
+}
+
+.modal-header {
+  padding: 12px 18px;
+  background-color: var(--bg-nav);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-white);
+}
+
+.modal-close {
+  font-size: 20px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--text-white);
+}
+
+.modal-body {
+  padding: 18px;
+  overflow-y: auto;
+}
+
+.hint-text code {
+  background: var(--bg-nav);
+  color: #f39c12;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: var(--font-code);
+}
+
+.add-card {
+  background-color: var(--bg-nav);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.add-card h4 {
+  color: #61afef;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.row.vertical {
+  flex-direction: column;
+}
+
+.col-4 { width: 33%; }
+.col-8 { width: 67%; }
+
+.add-card label {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.add-card input, .add-card textarea {
+  background-color: var(--bg-editor);
+  border: 1px solid var(--border-color);
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: var(--font-code);
+  font-size: 12px;
+  width: 100%;
+}
+
+.add-card input:focus, .add-card textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.btn-save {
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-save:hover {
+  background-color: #218838;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 16px 0;
+}
+
+.snippet-row {
+  background-color: var(--bg-nav);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.badge-key {
+  background-color: #007bff;
+  color: #ffffff;
+  font-family: var(--font-code);
+  font-weight: bold;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+
+.preview-code {
+  margin-top: 6px;
+  background-color: var(--bg-editor);
+  padding: 6px;
+  border-radius: 3px;
+  font-family: var(--font-code);
+  font-size: 11px;
+  max-height: 60px;
+  overflow: hidden;
+  white-space: pre-wrap;
+}
+
+.btn-del {
+  background-color: rgba(224, 108, 117, 0.15);
+  color: #e06c75;
+  border: 1px solid rgba(224, 108, 117, 0.3);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.btn-del:hover {
+  background-color: #e06c75;
+  color: #ffffff;
+}
