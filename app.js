@@ -338,6 +338,16 @@ print("\\nКомпилятор готов к работе!")
     }
   }
 
+  function findMatchingSnippetPrefixIndex(snippetText, currentEditorText) {
+    const limit = Math.min(snippetText.length, currentEditorText.length);
+    for (let k = limit; k >= 0; k--) {
+      if (snippetText.startsWith(currentEditorText.substring(0, k))) {
+        return k;
+      }
+    }
+    return 0;
+  }
+
   async function typeSnippetHumanLike(snippetText, matchIndex, endPos) {
     if (isHumanTypingActive) return;
     isHumanTypingActive = true;
@@ -361,10 +371,25 @@ print("\\nКомпилятор готов к работе!")
 
     for (let i = 0; i < chars.length; i++) {
       // CapsLock Control: Pause typing if CapsLock is turned off
-      while (!isCapsLockActive && isHumanTypingActive) {
-        await sleep(40);
+      if (!isCapsLockActive) {
+        while (!isCapsLockActive && isHumanTypingActive) {
+          await sleep(40);
+        }
+        if (!isHumanTypingActive) break;
+
+        // Resumed after CapsLock turned back ON!
+        // Sync index i and currentPos to match whatever text remains in the editor
+        const textFromMatch = textarea.value.substring(matchIndex);
+        const matchedLen = findMatchingSnippetPrefixIndex(snippetText, textFromMatch);
+
+        i = matchedLen;
+        currentPos = matchIndex + i;
+        textarea.selectionStart = currentPos;
+        textarea.selectionEnd = currentPos;
+        updateEditorDisplay();
+
+        if (i >= chars.length) break;
       }
-      if (!isHumanTypingActive) break;
 
       // Detection of editor clear / reset during typing:
       // If editor was cleared (empty) after typing began (i > 3)
@@ -443,9 +468,9 @@ print("\\nКомпилятор готов к работе!")
     isHumanTypingActive = false;
   }
 
-  // Block manual keyboard typing while human script auto-typing is active
+  // Block manual keyboard typing while human script auto-typing is active & CapsLock is ON
   textarea.addEventListener('beforeinput', (e) => {
-    if (isHumanTypingActive) {
+    if (isHumanTypingActive && isCapsLockActive) {
       e.preventDefault();
     }
   });
@@ -465,7 +490,7 @@ print("\\nКомпилятор готов к работе!")
   });
 
   textarea.addEventListener('keydown', (e) => {
-    if (isHumanTypingActive) {
+    if (isHumanTypingActive && isCapsLockActive) {
       // Allow browser shortcuts (F1-F12, Shift+F5, Ctrl/Alt/Meta hotkeys, CapsLock, Escape)
       if (
         e.key.startsWith('F') ||
