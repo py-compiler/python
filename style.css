@@ -729,3 +729,38 @@ html, body {
   background-color: #e06c75;
   color: #ffffff;
 }
+
+/* Responsive Media Queries for All Screen Sizes & Resolutions */
+@media (max-width: 900px) {
+  .workspace {
+    flex-direction: column;
+  }
+  .editor-pane {
+    height: 55%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .terminal-pane {
+    height: 45%;
+  }
+  .toolbar {
+    width: auto;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .args-input {
+    width: 110px;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-name {
+    font-size: 13px;
+  }
+  .tool-btn span, .run-main-btn span {
+    display: none;
+  }
+  .tool-btn, .run-main-btn {
+    padding: 0 8px;
+  }
+}
